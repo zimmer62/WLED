@@ -45,6 +45,8 @@ void onMqttConnect(bool sessionPresent)
     mqtt->subscribe(subuf, 0);
   }
 
+  userMQTTSubscribe();
+
   doPublishMqtt = true;
   DEBUG_PRINTLN("MQTT ready");
 }
@@ -68,6 +70,9 @@ void onMqttMessage(char* topic, char* payload, AsyncMqttClientMessageProperties 
     apireq += (char*)payload;
     handleSet(nullptr, apireq);
   } else parseMQTTBriPayload(payload);
+
+  userHandleMQTTPayload(topic, payload);
+
 }
 
 

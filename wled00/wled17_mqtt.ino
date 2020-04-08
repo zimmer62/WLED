@@ -45,7 +45,9 @@ void onMqttConnect(bool sessionPresent)
     mqtt->subscribe(subuf, 0);
   }
 
+#ifdef WLED_ENABLE_USER_MQTT
   userMQTTSubscribe();
+#endif
 
   doPublishMqtt = true;
   DEBUG_PRINTLN("MQTT ready");
@@ -71,7 +73,9 @@ void onMqttMessage(char* topic, char* payload, AsyncMqttClientMessageProperties 
     handleSet(nullptr, apireq);
   } else parseMQTTBriPayload(payload);
 
+#ifdef WLED_ENABLE_USER_MQTT
   userHandleMQTTPayload(topic, payload);
+#endif
 
 }
 

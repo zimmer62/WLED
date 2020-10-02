@@ -6,3 +6,7 @@
 /wled00/Release
 /wled00/extLibs
 /platformio_override.ini
+.DS_Store
+.gitignore
+.clang-format
+node_modules

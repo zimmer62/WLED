@@ -1,10 +1,26 @@
-#ifndef wled_const_h
-#define wled_const_h
+#ifndef WLED_CONST_H
+#define WLED_CONST_H
+
+/*
+ * Readability defines and their associated numerical values + compile-time constants
+ */
 
 //Defaults
 #define DEFAULT_CLIENT_SSID "Your_Network"
 #define DEFAULT_AP_PASS     "wled1234"
 #define DEFAULT_OTA_PASS    "wledota"
+
+//increase if you need more
+#define WLED_MAX_USERMODS 4
+
+//Usermod IDs
+#define USERMOD_ID_RESERVED       0            //Unused. Might indicate no usermod present
+#define USERMOD_ID_UNSPECIFIED    1            //Default value for a general user mod that does not specify a custom ID
+#define USERMOD_ID_EXAMPLE        2            //Usermod "usermod_v2_example.h"
+#define USERMOD_ID_TEMPERATURE    3            //Usermod "usermod_temperature.h"
+#define USERMOD_ID_FIXNETSERVICES 4            //Usermod "usermod_Fix_unreachable_netservices.h"
+#define USERMOD_ID_PIRSWITCH      5            //Usermod "usermod_PIR_sensor_switch.h"
+#define USERMOD_ID_IMU            6            //Usermod "usermod_mpu6050_imu.h"
 
 //Access point behavior
 #define AP_BEHAVIOR_BOOT_NO_CONN  0            //Open AP when no connection after boot
@@ -39,6 +55,14 @@
 #define REALTIME_MODE_HYPERION    3
 #define REALTIME_MODE_E131        4
 #define REALTIME_MODE_ADALIGHT    5
+#define REALTIME_MODE_ARTNET      6
+#define REALTIME_MODE_TPM2NET     7
+#define REALTIME_MODE_DDP         8
+
+//realtime override modes
+#define REALTIME_OVERRIDE_NONE    0
+#define REALTIME_OVERRIDE_ONCE    1
+#define REALTIME_OVERRIDE_ALWAYS  2
 
 //E1.31 DMX modes
 #define DMX_MODE_DISABLED         0            //not used
@@ -71,5 +95,45 @@
 #define HUE_ERROR_JSON_PARSING  250
 #define HUE_ERROR_TIMEOUT       251
 #define HUE_ERROR_ACTIVE        255
+
+//Segment option byte bits
+#define SEG_OPTION_SELECTED       0
+#define SEG_OPTION_REVERSED       1
+#define SEG_OPTION_ON             2
+#define SEG_OPTION_MIRROR         3            //Indicates that the effect will be mirrored within the segment
+#define SEG_OPTION_NONUNITY       4            //Indicates that the effect does not use FRAMETIME or needs getPixelColor
+#define SEG_OPTION_FREEZE         5            //Segment contents will not be refreshed
+#define SEG_OPTION_TRANSITIONAL   7
+
+//Timer mode types
+#define NL_MODE_SET               0            //After nightlight time elapsed, set to target brightness
+#define NL_MODE_FADE              1            //Fade to target brightness gradually
+#define NL_MODE_COLORFADE         2            //Fade to target brightness and secondary color gradually
+#define NL_MODE_SUN               3            //Sunrise/sunset. Target brightness is set immediately, then Sunrise effect is started. Max 60 min.
+
+//EEPROM size
+#define EEPSIZE 2560  //Maximum is 4096
+
+#define NTP_PACKET_SIZE 48
+
+// maximum number of LEDs - MAX_LEDS is coming from the JSON response getting too big, MAX_LEDS_DMA will become a timing issue
+#define MAX_LEDS 1500
+#define MAX_LEDS_DMA 500
+
+// string temp buffer (now stored in stack locally)
+#define OMAX 2048
+
+#define E131_MAX_UNIVERSE_COUNT 9
+
+#define ABL_MILLIAMPS_DEFAULT 850; // auto lower brightness to stay close to milliampere limit
+
+#define TOUCH_THRESHOLD 32 // limit to recognize a touch, higher value means more sensitive
+
+// Size of buffer for API JSON object (increase for more segments)
+#ifdef ESP8266
+  #define JSON_BUFFER_SIZE 9216
+#else
+  #define JSON_BUFFER_SIZE 16384
+#endif
 
 #endif
